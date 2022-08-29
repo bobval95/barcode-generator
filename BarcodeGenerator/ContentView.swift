@@ -8,9 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var selectedType: BarcodeType = BarcodeType.QR
+    
     var body: some View {
-        Text("Hello, world!")
+        VStack(spacing: 5){
+            HStack {
+                Text("Barcode Generator")
+                    .font(.system(.title))
+                    .padding()
+                Spacer()
+            }
+            Picker("Barcode type", selection: $selectedType){
+                ForEach(BarcodeType.allCases, id: \.self ) { value in
+                    Text(value.localizedName)
+                }
+            }
+            .pickerStyle(.segmented)
             .padding()
+            
+            BarcodeGeneratorView(codeType: $selectedType)
+            
+            Spacer()
+        }
     }
 }
 
